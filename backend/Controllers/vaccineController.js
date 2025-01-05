@@ -1,5 +1,5 @@
 const Vaccine = require('../Models/Vaccine');
-const UserVaccine = require('../Models/UserVaccine'); // Import UserVaccine model
+const UserVaccine = require('../Models/userVaccine'); // Import UserVaccine model
 const User = require('../Models/User'); // Import User model
 const mongoose = require('mongoose');
 
