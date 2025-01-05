@@ -1,16 +1,16 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import './VaccineList.css'; // Import your custom CSS file
+import './VaccineList.css'; 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'; // Import icons
+import { faEdit, faTrashAlt } from '@fortawesome/free-solid-svg-icons'; 
 
 const VaccineList = ({ vaccines, onEdit, onDelete }) => {
   const [deleteError, setDeleteError] = useState('');
-  const [deletingId, setDeletingId] = useState(null); // Track which vaccine is being deleted
+  const [deletingId, setDeletingId] = useState(null); 
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this vaccine?')) {
-      setDeletingId(id); // Set the deleting ID to show loading
+      setDeletingId(id); 
       axios.delete(`http://localhost:8080/vaccines/${id}`)
         .then(() => {
           onDelete(id);
@@ -20,7 +20,7 @@ const VaccineList = ({ vaccines, onEdit, onDelete }) => {
           setDeleteError(`Error deleting vaccine with ID: ${id}. Please try again.`);
         })
         .finally(() => {
-          setDeletingId(null); // Reset deleting state after the operation
+          setDeletingId(null); 
         });
     }
   };
@@ -60,7 +60,7 @@ const VaccineList = ({ vaccines, onEdit, onDelete }) => {
                   <button 
                     className="btn-delete" 
                     onClick={() => handleDelete(vaccine._id)} 
-                    disabled={deletingId === vaccine._id} // Disable delete while deleting
+                    disabled={deletingId === vaccine._id} 
                   >
                     {deletingId === vaccine._id ? 'Deleting...' : <><FontAwesomeIcon icon={faTrashAlt} /> Delete</>}
                   </button>
