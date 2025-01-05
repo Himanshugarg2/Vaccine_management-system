@@ -9,7 +9,9 @@ const otpRoutes = require('./Routes/otpRoutes'); // Import OTP routes
 
 require('dotenv').config();
 require('./Models/db');
-const PORT = process.env.PORT || 8080;
+
+// Use the PORT environment variable, or default to 10000 if not provided by Render
+const PORT = process.env.PORT || 10000;
 
 const app = express();
 
@@ -21,6 +23,6 @@ app.use('/doctors', doctorRoutes);
 app.use('/user-vaccines', userVaccineRoutes);
 app.use('/otp', otpRoutes); // Use OTP routes
 
-app.listen(PORT, () => {
-   console.log(`Server is running on ${PORT}`);
+app.listen(PORT, '0.0.0.0', () => {
+   console.log(`Server is running on port ${PORT}`);
 });
