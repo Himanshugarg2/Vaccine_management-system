@@ -10,19 +10,14 @@ const VaccineForm = ({ vaccineId, onVaccineSaved, onCancel }) => {
   });
 
   const [errors, setErrors] = useState({});
-  const [apiError, setApiError] = useState('');
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     if (vaccineId) {
-      const trimmedVaccineId = vaccineId.trim(); 
-      axios.get(`http://localhost:8080/vaccines/${trimmedVaccineId}`)
+      const trimmedVaccineId = vaccineId.trim();
+      axios.get(`https://immunilink.onrender.com/vaccines/${trimmedVaccineId}`)
         .then(response => {
           setFormData(response.data);
-        })
-        .catch(error => {
-          const errorMessage = error.response ? error.response.data : 'Unknown error occurred';
-          setApiError('Error fetching vaccine details. Please check the ID.');
         });
     }
   }, [vaccineId]);
@@ -57,12 +52,12 @@ const VaccineForm = ({ vaccineId, onVaccineSaved, onCancel }) => {
 
     try {
       const request = vaccineId 
-        ? axios.put(`http://localhost:8080/vaccines/${vaccineId}`, {
+        ? axios.put(`https://immunilink.onrender.com/vaccines/${vaccineId}`, {
             ...formData,
             ageLimit: Number(formData.ageLimit),
             govtPrice: Number(formData.govtPrice)
           }) 
-        : axios.post('http://localhost:8080/vaccines', {
+        : axios.post('https://immunilink.onrender.com/vaccines', {
             ...formData,
             ageLimit: Number(formData.ageLimit),
             govtPrice: Number(formData.govtPrice)
@@ -70,9 +65,7 @@ const VaccineForm = ({ vaccineId, onVaccineSaved, onCancel }) => {
 
       const response = await request;
 
-      
       onVaccineSaved(response.data); 
-
 
       setFormData({
         name: '',
@@ -80,10 +73,6 @@ const VaccineForm = ({ vaccineId, onVaccineSaved, onCancel }) => {
         ageLimit: '',
         govtPrice: ''
       });
-      setApiError('');
-    } catch (error) {
-      const errorMessage = error.response ? error.response.data : 'Error saving vaccine. Please try again.';
-      setApiError(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -91,8 +80,6 @@ const VaccineForm = ({ vaccineId, onVaccineSaved, onCancel }) => {
 
   return (
     <form onSubmit={handleSubmit}>
-      {apiError && <div className="alert alert-danger">{apiError}</div>}
-      
       <div className="form-group">
         <label>Name</label>
         <input

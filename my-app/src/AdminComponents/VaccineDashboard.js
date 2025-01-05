@@ -14,7 +14,7 @@ const VaccineDashboard = () => {
   }, []);
 
   const fetchVaccines = () => {
-    axios.get('http://localhost:8080/vaccines')
+    axios.get('https://immunilink.onrender.com/vaccines')
       .then(response => {
         setVaccines(response.data);
       })
@@ -41,7 +41,7 @@ const VaccineDashboard = () => {
   };
 
   const handleDelete = (id) => {
-    axios.delete(`http://localhost:8080/vaccines/${id}`)
+    axios.delete(`https://immunilink.onrender.com/vaccines/${id}`)
       .then(() => {
         setVaccines(vaccines.filter(vaccine => vaccine._id !== id));
       })

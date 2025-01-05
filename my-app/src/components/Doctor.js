@@ -17,7 +17,7 @@ const Doctor = () => {
 
   const fetchUserId = async () => {
     try {
-      const response = await fetch(`http://localhost:8080/auth/get-user-id?email=${email}`, {
+      const response = await fetch(`https://immunilink.onrender.com/auth/get-user-id?email=${email}`, {
         headers: {
           Authorization: `Bearer ${token}`,
           'Cache-Control': 'no-cache',
@@ -36,7 +36,7 @@ const Doctor = () => {
   const fetchUserVaccines = async (userId) => {
     setLoading(true);
     try {
-      const response = await fetch(`http://localhost:8080/user-vaccines/${userId}`, {
+      const response = await fetch(`https://immunilink.onrender.com/user-vaccines/${userId}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -54,7 +54,7 @@ const Doctor = () => {
   const markComplete = async (vaccine) => {
     try {
       const response = await fetch(
-        `http://localhost:8080/user-vaccines/${userId}/${vaccine.vaccineId._id}`,
+        `https://immunilink.onrender.com/user-vaccines/${userId}/${vaccine.vaccineId._id}`,
         {
           method: 'PUT',
           headers: {

@@ -10,7 +10,7 @@ const DoctorLogin = () => {
   const requestOtp = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/otp/request-otp', {
+      const response = await fetch('https://immunilink.onrender.com/otp/request-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
@@ -31,7 +31,7 @@ const DoctorLogin = () => {
   const verifyOtp = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:8080/otp/verify-otp', {
+      const response = await fetch('https://immunilink.onrender.com/otp/verify-otp', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email, otp })

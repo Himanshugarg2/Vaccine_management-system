@@ -11,7 +11,7 @@ const RequestOtp = () => {
     const requestOtp = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.post('http://localhost:8080/otp/request-otp', { email });
+            const response = await axios.post('https://immunilink.onrender.com/otp/request-otp', { email });
             setMessage(response.data.message);
             if (response.status === 200) {
                 navigate('/verifyotp', { state: { email } });

@@ -14,7 +14,7 @@ const DoctorDashboard = () => {
   }, []);
 
   const fetchDoctors = () => {
-    axios.get('http://localhost:8080/doctors')
+    axios.get('https://immunilink.onrender.com/doctors')
       .then(response => {
         setDoctors(response.data);
       })
@@ -36,7 +36,7 @@ const DoctorDashboard = () => {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`http://localhost:8080/doctors/${id}`);
+      await axios.delete(`https://immunilink.onrender.com/doctors/${id}`);
       setDoctors(doctors.filter(doctor => doctor._id !== id));
     } catch (error) {
       console.error('Error deleting doctor:', error);

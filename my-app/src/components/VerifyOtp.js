@@ -13,7 +13,7 @@ const VerifyOtp = () => {
     const verifyOtp = async () => {
         setIsLoading(true);
         try {
-            const response = await axios.post('http://localhost:8080/otp/verify-otp', { email, otp });
+            const response = await axios.post('https://immunilink.onrender.com/otp/verify-otp', { email, otp });
             setMessage(response.data.message);
             if (response.status === 200) {
                 navigate('/Doctor');

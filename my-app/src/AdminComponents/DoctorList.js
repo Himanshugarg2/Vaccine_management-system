@@ -8,7 +8,7 @@ const DoctorList = ({ doctors, onEdit, onDelete }) => {
 
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this doctor?')) {
-      axios.delete(`http://localhost:8080/doctors/${id}`)
+      axios.delete(`https://immunilink.onrender.com/doctors/${id}`)
         .then(() => {
           onDelete(id);
           setDeleteError('');

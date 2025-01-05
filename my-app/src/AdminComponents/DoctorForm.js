@@ -15,7 +15,7 @@ const DoctorForm = ({ doctorId, onDoctorSaved, onCancel }) => {
 
   useEffect(() => {
     if (doctorId) {
-      axios.get(`http://localhost:8080/doctors/${doctorId}`)
+      axios.get(`https://immunilink.onrender.com/doctors/${doctorId}`)
         .then(response => {
           setFormData(response.data);
         })
@@ -55,8 +55,8 @@ const DoctorForm = ({ doctorId, onDoctorSaved, onCancel }) => {
 
     try {
       const request = doctorId 
-        ? axios.put(`http://localhost:8080/doctors/${doctorId}`, formData)
-        : axios.post('http://localhost:8080/doctors', formData);
+        ? axios.put(`https://immunilink.onrender.com/doctors/${doctorId}`, formData)
+        : axios.post('https://immunilink.onrender.com/doctors', formData);
 
       await request;
       onDoctorSaved(); 

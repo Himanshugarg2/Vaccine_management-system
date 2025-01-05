@@ -24,7 +24,7 @@ const MyVaccines = () => {
       const userId = payload._id;
 
       try {
-        const response = await axios.get(`http://localhost:8080/user-vaccines/${userId}`, {
+        const response = await axios.get(`https://immunilink.onrender.com/user-vaccines/${userId}`, {
           headers: {
             Authorization: `Bearer ${token}`,
             'Cache-Control': 'no-cache',

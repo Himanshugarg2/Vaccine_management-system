@@ -11,7 +11,7 @@ const VaccineList = ({ vaccines, onEdit, onDelete }) => {
   const handleDelete = (id) => {
     if (window.confirm('Are you sure you want to delete this vaccine?')) {
       setDeletingId(id); 
-      axios.delete(`http://localhost:8080/vaccines/${id}`)
+      axios.delete(`https://immunilink.onrender.com/vaccines/${id}`)
         .then(() => {
           onDelete(id);
           setDeleteError('');
