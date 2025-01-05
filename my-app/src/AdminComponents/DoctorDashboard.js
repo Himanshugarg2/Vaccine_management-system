@@ -2,10 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import DoctorForm from './DoctorForm';
 import DoctorList from './DoctorList';
-import AdminNavbar from './AdminNavbar';
-import './DoctorDashboard.css'; 
-import { FaUserPlus } from 'react-icons/fa'; 
-import { FaUserMd } from 'react-icons/fa'; 
+import { FaUserPlus, FaUserMd } from 'react-icons/fa';
 
 const DoctorDashboard = () => {
   const [doctors, setDoctors] = useState([]);
@@ -16,7 +13,6 @@ const DoctorDashboard = () => {
     fetchDoctors();
   }, []);
 
-  // Fetch doctors from the server
   const fetchDoctors = () => {
     axios.get('http://localhost:8080/doctors')
       .then(response => {
@@ -27,24 +23,20 @@ const DoctorDashboard = () => {
       });
   };
 
-  // Handle saving or editing a doctor
   const handleDoctorSaved = () => {
-    fetchDoctors(); // Refetch the updated doctor list after saving
+    fetchDoctors();
     setEditingDoctorId(null);
     setIsFormVisible(false);
   };
 
-  // Handle doctor edit
   const handleEdit = (id) => {
     setEditingDoctorId(id);
     setIsFormVisible(true);
   };
 
-  // Handle doctor deletion
   const handleDelete = async (id) => {
     try {
       await axios.delete(`http://localhost:8080/doctors/${id}`);
-      // Optimistically update the UI without refetching data
       setDoctors(doctors.filter(doctor => doctor._id !== id));
     } catch (error) {
       console.error('Error deleting doctor:', error);
@@ -52,41 +44,45 @@ const DoctorDashboard = () => {
   };
 
   return (
-    <>
-      <AdminNavbar />
-      <div className="dashboard-container">
-        <h1 className="dashboard-title"><FaUserMd /> Doctor Management Dashboard</h1>
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold flex items-center justify-center gap-3 text-slate-800">
+          <FaUserMd className="text-slate-800 text-3xl" />
+          Doctor Management Dashboard
+        </h1>
+      </div>
 
-        <div className="add-doctor-container">
-          <button className="btn-add-doctor" onClick={() => setIsFormVisible(true)}>
-            <FaUserPlus className="icon" /> Add Doctor
-          </button>
-        </div>
+      <div className="flex justify-center mb-8">
+        <button
+          onClick={() => setIsFormVisible(true)}
+          className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-md transition-colors duration-200 shadow-md"
+        >
+          <FaUserPlus className="text-sm" />
+          Add Doctor
+        </button>
+      </div>
 
-        {/* Doctor Form for Adding/Editing */}
-        {isFormVisible && (
-          <div className="form-container">
-            <DoctorForm
-              doctorId={editingDoctorId}
-              onDoctorSaved={handleDoctorSaved}  // Refetch doctor list after save
-              onCancel={() => {
-                setEditingDoctorId(null);
-                setIsFormVisible(false);
-              }}
-            />
-          </div>
-        )}
-
-        {/* Doctor List */}
-        <div className="doctor-list-container">
-          <DoctorList
-            doctors={doctors}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
+      {isFormVisible && (
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <DoctorForm
+            doctorId={editingDoctorId}
+            onDoctorSaved={handleDoctorSaved}
+            onCancel={() => {
+              setEditingDoctorId(null);
+              setIsFormVisible(false);
+            }}
           />
         </div>
+      )}
+
+      <div className="bg-white rounded-lg shadow-md">
+        <DoctorList
+          doctors={doctors}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       </div>
-    </>
+    </div>
   );
 };
 

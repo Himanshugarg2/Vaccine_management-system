@@ -16,6 +16,8 @@ import LandingPage from "./components/LandingPage";
 import DoctorLogin from "./components/DoctorLogin";
 import RequestOtp from "./components/RequestOtp";
 import VerifyOtp from "./components/VerifyOtp";
+import AdminNavbar from "./AdminComponents/AdminNavbar";
+
 function App() {
   return (
     <Router>
@@ -26,21 +28,23 @@ function App() {
 
 function AppContent() {
   const location = useLocation();
-
   const currentPath = location.pathname.toLowerCase();
 
   
   const hideNavAndFooter = 
-  ['/','/signin', '/register', '/vaccinedashboard', '/doctordashboard','/doctor','/requestotp','/verifyotp'].includes(currentPath);
+    ['/','/signin', '/register', '/vaccinedashboard', '/doctordashboard','/doctor','/requestotp','/verifyotp'].includes(currentPath);
 
+  const showAdminNavbar = ['/vaccinedashboard', '/doctordashboard'].includes(currentPath);
 
   return (
     <>
-     
-      {!hideNavAndFooter && <Navbar searchBar={false} />}
-      
+      {/* Show the appropriate navbar */}
+      {!showAdminNavbar && !hideNavAndFooter && <Navbar searchBar={false} />}
+      {showAdminNavbar && <AdminNavbar />}
+
+      {/* Main content routes */}
       <Routes>
-      <Route path="/" element={<LandingPage/>} />
+        <Route path="/" element={<LandingPage />} />
         <Route path="/signin" element={<Login />} />
         <Route path="/register" element={<Register />} />
         <Route path="/homepage" element={<Homepage />} />
@@ -51,16 +55,12 @@ function AppContent() {
         <Route path="/reviews" element={<Reviews />} />
         <Route path="/vaccinedashboard" element={<VaccineDashboard />} />
         <Route path="/doctordashboard" element={<DoctorDashboard />} />
-        <Route path="/DoctorLogin" element={<DoctorLogin/>}/>
-        <Route path="/RequestOtp" element={<RequestOtp/>}/>
-        <Route path="/VerifyOtp" element={<VerifyOtp/>}/>
-      
-   
-   
-
+        <Route path="/DoctorLogin" element={<DoctorLogin />} />
+        <Route path="/RequestOtp" element={<RequestOtp />} />
+        <Route path="/VerifyOtp" element={<VerifyOtp />} />
       </Routes>
+
       
-      {/* Footer should not be visible on certain routes */}
       {!hideNavAndFooter && <Footer />}
     </>
   );

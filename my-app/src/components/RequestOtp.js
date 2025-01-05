@@ -23,43 +23,58 @@ const RequestOtp = () => {
     };
 
     return (
-        <div className="container">
-            <div className="row justify-content-center mt-5">
-                <div className="col-md-6">
-                    <div className="card">
-                        <div className="card-body">
-                            <h2 className="card-title text-center mb-4">Doctor Login - Request OTP</h2>
-                            <form>
-                                <div className="mb-3">
-                                    <label htmlFor="email" className="form-label">Email address</label>
-                                    <input
-                                        type="email"
-                                        className="form-control"
-                                        id="email"
-                                        placeholder="Enter your email"
-                                        value={email}
-                                        onChange={(e) => setEmail(e.target.value)}
-                                        required
-                                    />
-                                </div>
-                                <div className="d-grid gap-2">
-                                    <button
-                                        type="button"
-                                        className="btn btn-primary btn-lg"
-                                        onClick={requestOtp}
-                                        disabled={isLoading}
-                                    >
-                                        {isLoading ? 'Requesting OTP...' : 'Request OTP'}
-                                    </button>
-                                </div>
-                            </form>
-                            {message && (
-                                <div className="alert alert-info mt-3" role="alert">
-                                    {message}
-                                </div>
-                            )}
+        <div className="min-h-screen bg-gradient-to-br flex items-center justify-center p-6">
+            <div className="w-full max-w-md bg-white rounded-2xl shadow-2xl p-8">
+                <div className="text-center mb-8">
+                    <h2 className="text-3xl font-bold text-red-600">Doctor Login</h2>
+                    <p className="text-gray-500 mt-2">Request OTP for authentication</p>
+                </div>
+
+                <div className="space-y-6">
+                    <div className="space-y-4">
+                        <div>
+                            <label 
+                                htmlFor="email" 
+                                className="block text-sm font-medium text-gray-700 mb-2"
+                            >
+                                Email Address
+                            </label>
+                            <input
+                                type="email"
+                                id="email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-red-500 focus:border-red-500 transition-all duration-200"
+                                placeholder="Enter your email"
+                                required
+                            />
                         </div>
+
+                        <button
+                            type="button"
+                            onClick={requestOtp}
+                            disabled={isLoading || !email}
+                            className={`w-full py-3 rounded-lg font-medium transition-all duration-200
+                                ${isLoading || !email 
+                                    ? 'bg-gray-300 cursor-not-allowed' 
+                                    : 'bg-red-600 hover:bg-red-700 text-white shadow-lg hover:shadow-xl'}`}
+                        >
+                            {isLoading ? (
+                                <div className="flex items-center justify-center">
+                                    <div className="w-5 h-5 border-t-2 border-b-2 border-white rounded-full animate-spin mr-2"></div>
+                                    Requesting OTP...
+                                </div>
+                            ) : 'Request OTP'}
+                        </button>
                     </div>
+
+                    {message && (
+                        <div className={`p-4 rounded-lg ${message.includes('success') 
+                            ? 'bg-green-50 text-green-700' 
+                            : 'bg-red-50 text-red-700'}`}>
+                            {message}
+                        </div>
+                    )}
                 </div>
             </div>
         </div>

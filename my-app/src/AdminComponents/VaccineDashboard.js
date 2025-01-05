@@ -2,9 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import VaccineForm from './VaccineForm';
 import VaccineList from './VaccineList';
-import AdminNavbar from './AdminNavbar';
 import { FaPlus, FaSyringe } from 'react-icons/fa';
-import "./VaccineDashboard.css";
 
 const VaccineDashboard = () => {
   const [vaccines, setVaccines] = useState([]);
@@ -15,7 +13,6 @@ const VaccineDashboard = () => {
     fetchVaccines();
   }, []);
 
-  // Fetch all vaccines from the server
   const fetchVaccines = () => {
     axios.get('http://localhost:8080/vaccines')
       .then(response => {
@@ -26,18 +23,14 @@ const VaccineDashboard = () => {
       });
   };
 
-  // Handle vaccine addition or editing
   const handleVaccineSaved = (newVaccine) => {
     if (editingVaccineId) {
-      // Update an existing vaccine in the state
       setVaccines(vaccines.map(vaccine =>
         vaccine._id === newVaccine._id ? newVaccine : vaccine
       ));
     } else {
-      // Add a new vaccine to the state
       setVaccines([...vaccines, newVaccine]);
     }
-
     setEditingVaccineId(null);
     setIsFormVisible(false);
   };
@@ -47,7 +40,6 @@ const VaccineDashboard = () => {
     setIsFormVisible(true);
   };
 
-  // Handle deletion and update the state without refreshing
   const handleDelete = (id) => {
     axios.delete(`http://localhost:8080/vaccines/${id}`)
       .then(() => {
@@ -59,40 +51,45 @@ const VaccineDashboard = () => {
   };
 
   return (
-    <>
-      <AdminNavbar />
-      <div className="container vaccine-dashboard">
-        <h1 className="dashboard-heading">
-          <FaSyringe className="dashboard-icon" /> Vaccine Management Dashboard
+    <div className="max-w-7xl mx-auto px-4 py-8">
+      <div className="text-center mb-8">
+        <h1 className="text-3xl font-bold flex items-center justify-center gap-3 text-slate-800">
+          <FaSyringe className="text-slate-800" />
+          Vaccine Management Dashboard
         </h1>
-        <div className="add-btn-container mt-4">
-          <button className="btn btn-primary" onClick={() => setIsFormVisible(true)}>
-            <FaPlus className="icon" /> Add Vaccine
-          </button>
-        </div>
+      </div>
 
-        {isFormVisible && (
-          <div className="mt-4 form-container">
-            <VaccineForm
-              vaccineId={editingVaccineId}
-              onVaccineSaved={handleVaccineSaved} // Pass the new or edited vaccine back to the parent component
-              onCancel={() => {
-                setEditingVaccineId(null);
-                setIsFormVisible(false);
-              }}
-            />
-          </div>
-        )}
+      <div className="flex justify-center mb-8">
+        <button
+          onClick={() => setIsFormVisible(true)}
+          className="flex items-center gap-2 bg-slate-800 hover:bg-slate-700 text-white px-6 py-3 rounded-md transition-colors duration-200 shadow-md"
+        >
+          <FaPlus className="text-sm" />
+          Add Vaccine
+        </button>
+      </div>
 
-        <div className="mt-4 list-container">
-          <VaccineList
-            vaccines={vaccines}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
+      {isFormVisible && (
+        <div className="bg-white rounded-lg shadow-md p-6 mb-8">
+          <VaccineForm
+            vaccineId={editingVaccineId}
+            onVaccineSaved={handleVaccineSaved}
+            onCancel={() => {
+              setEditingVaccineId(null);
+              setIsFormVisible(false);
+            }}
           />
         </div>
+      )}
+
+      <div className="bg-white rounded-lg shadow-md">
+        <VaccineList
+          vaccines={vaccines}
+          onEdit={handleEdit}
+          onDelete={handleDelete}
+        />
       </div>
-    </>
+    </div>
   );
 };
 
