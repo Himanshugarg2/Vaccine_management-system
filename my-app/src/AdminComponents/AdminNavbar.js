@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Menu, X } from 'lucide-react';
+import { Link } from 'react-router-dom'; // Import Link from react-router-dom
 
 const AdminNavbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,13 +20,12 @@ const AdminNavbar = () => {
 
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center space-x-8">
-            <a href="/Vaccinedashboard" className="text-gray-300 hover:text-white transition-colors">
+            <Link to="/vaccinedashboard" className="text-gray-300 hover:text-white transition-colors">
               Manage Vaccines
-            </a>
-            <a href="/Doctordashboard" className="text-gray-300 hover:text-white transition-colors">
+            </Link>
+            <Link to="/doctordashboard" className="text-gray-300 hover:text-white transition-colors">
               Manage Doctors
-            </a>
-            
+            </Link>
           </div>
 
           {/* Mobile menu button */}
@@ -44,19 +44,18 @@ const AdminNavbar = () => {
         {isOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1">
-              <a
-                href="/Vaccinedashboard"
+              <Link
+                to="/vaccinedashboard"
                 className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-slate-700 rounded-md"
               >
                 Manage Vaccines
-              </a>
-              <a
-                href="/Doctordashboard"
+              </Link>
+              <Link
+                to="/doctordashboard"
                 className="block px-3 py-2 text-gray-300 hover:text-white hover:bg-slate-700 rounded-md"
               >
                 Manage Doctors
-              </a>
-              
+              </Link>
             </div>
           </div>
         )}
