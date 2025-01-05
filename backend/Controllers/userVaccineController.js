@@ -1,4 +1,4 @@
-const UserVaccine = require('../Models/UserVaccine'); // Import UserVaccine model
+const UserVaccine = require('../Models/userVaccine'); // Import UserVaccine model
 
 // Assign a vaccine to a user
 exports.assignVaccineToUser = async (req, res) => {

@@ -5,7 +5,7 @@ const AuthRouter = require('./Routes/AuthRouter');
 const vaccineRoutes = require('./Routes/VaccineRoute');
 const doctorRoutes = require('./Routes/DoctorRoutes');
 const userVaccineRoutes = require('./Routes/userVaccine');
-const otpRoutes = require('./Routes/otpRoutes'); // Import OTP routes
+const otpRoutes = require('./Routes/otpRoutes'); 
 
 require('dotenv').config();
 require('./Models/db');
