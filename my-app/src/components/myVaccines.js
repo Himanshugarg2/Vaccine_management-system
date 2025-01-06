@@ -1,7 +1,6 @@
-import React, { useEffect, useState } from "react";
-import { FaCheckCircle, FaTimesCircle } from 'react-icons/fa'; 
-import './MyVaccines.css'; 
-import axios from "axios";
+import React, { useState, useEffect } from 'react';
+import { CheckCircle, XCircle, Loader } from 'lucide-react';
+import axios from 'axios';
 
 const MyVaccines = () => {
   const [vaccines, setVaccines] = useState([]);
@@ -12,7 +11,7 @@ const MyVaccines = () => {
     const fetchUserVaccines = async () => {
       const token = localStorage.getItem("token");
       const email = localStorage.getItem("loggedInUserEmail");
-      
+
       if (!token || !email) {
         setError("User not authenticated");
         setLoading(false);
@@ -43,51 +42,105 @@ const MyVaccines = () => {
     fetchUserVaccines();
 
     // Set up polling to check for updates every 5 seconds
-    const intervalId = setInterval(fetchUserVaccines, 5000); // Poll every 5 seconds
+    const intervalId = setInterval(fetchUserVaccines, 5000);
 
     // Clean up the interval when the component unmounts
     return () => clearInterval(intervalId);
   }, []);
 
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-gray-100 p-8 flex items-center justify-center">
+        <div className="flex items-center gap-2 text-gray-600">
+          <Loader className="animate-spin" size={24} />
+          <span>Loading vaccines...</span>
+        </div>
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen bg-gray-100 p-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="bg-red-100 text-red-700 p-4 rounded-lg">
+            {error}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className="myVaccines-container">
-      <h2 className="section-title">My Vaccines</h2>
-      {loading ? (
-        <p>Loading...</p>
-      ) : error ? (
-        <p className="error-message">{error}</p>
-      ) : vaccines.length > 0 ? (
-        <ul className="list-group">
-          {vaccines.map((vaccine) => (
-            <li key={vaccine._id} className="list-group-item vaccine-card">
-              <h5 className="vaccine-name">{vaccine.vaccineId.name}</h5>
-              <p className="vaccine-desc">{vaccine.vaccineId.description}</p>
-              <div className="vaccine-details">
-                <small>Age Limit: <strong>{vaccine.vaccineId.ageLimit}</strong></small>
-                <small>Government Price: <strong>₹{vaccine.vaccineId.govtPrice}</strong></small>
-              </div>
-              <div 
-                className={`status-indicator ${vaccine.isCompleted ? 'bg-success' : 'bg-danger'}`}
+    <div className="min-h-screen bg-gray-100 p-8">
+      <div className="max-w-6xl mx-auto">
+        <h1 className="text-3xl font-bold text-gray-800 mb-6">My Vaccines</h1>
+
+        {vaccines.length === 0 ? (
+          <div className="bg-white rounded-lg shadow-md p-6 text-gray-600">
+            No vaccines available.
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {vaccines.map((vaccine) => (
+              <div
+                key={vaccine._id}
+                className="bg-white rounded-lg shadow-md overflow-hidden"
               >
-                <small className="status-text">
-                  {vaccine.isCompleted ? 
-                    <>
-                      <FaCheckCircle className="icon-success" /> 
-                      Completed on: {new Date(vaccine.completionDate).toLocaleDateString()}
-                    </> : 
-                    <>
-                      <FaTimesCircle className="icon-danger" /> 
-                      Not completed yet
-                    </>
-                  }
-                </small>
+                <div className="p-6">
+                  <div className="flex justify-between items-start mb-4">
+                    <h2 className="text-xl font-semibold text-gray-800">
+                      {vaccine.vaccineId.name}
+                    </h2>
+                    <div
+                      className={`flex items-center gap-2 px-3 py-1 rounded-full text-sm ${
+                        vaccine.isCompleted
+                          ? 'bg-green-100 text-green-700'
+                          : 'bg-red-100 text-red-700'
+                      }`}
+                    >
+                      {vaccine.isCompleted ? (
+                        <>
+                          <CheckCircle size={16} />
+                          <span>Completed</span>
+                        </>
+                      ) : (
+                        <>
+                          <XCircle size={16} />
+                          <span>Pending</span>
+                        </>
+                      )}
+                    </div>
+                  </div>
+
+                  <div className="space-y-3">
+                    <p className="text-gray-600 text-sm">
+                      {vaccine.vaccineId.description}
+                    </p>
+
+                    <div className="border-t pt-3 space-y-2">
+                      <p className="text-sm text-gray-600">
+                        <span className="font-medium">Age Limit:</span>{' '}
+                        {vaccine.vaccineId.ageLimit}
+                      </p>
+                      <p className="text-sm text-gray-600">
+                        <span className="font-medium">Government Price:</span>{' '}
+                        ₹{vaccine.vaccineId.govtPrice.toLocaleString()}
+                      </p>
+                      {vaccine.isCompleted && (
+                        <p className="text-sm text-gray-600">
+                          <span className="font-medium">Completed on:</span>{' '}
+                          {new Date(vaccine.completionDate).toLocaleDateString()}
+                        </p>
+                      )}
+                    </div>
+                  </div>
+                </div>
               </div>
-            </li>
-          ))}
-        </ul>
-      ) : (
-        <p className="no-vaccines">No vaccines available.</p>
-      )}
+            ))}
+          </div>
+        )}
+      </div>
     </div>
   );
 };
