@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate,Link } from "react-router-dom"; // Import useNavigate
-import { FaEnvelope, FaPhone, FaLock, FaUser } from "react-icons/fa"; // Import icons
+import { useNavigate, Link } from "react-router-dom";
+import { FaEnvelope, FaPhone, FaLock, FaUser } from "react-icons/fa";
 import { MdDateRange } from "react-icons/md";
-import './Register.css'; // Import the new CSS for styling
+import './Register.css';
+import image from './image.png';
 
 const Register = () => {
-  const navigate = useNavigate(); // Initialize useNavigate
+  const navigate = useNavigate();
   const [formData, setFormData] = useState({
     childName: "",
     birthDate: "",
@@ -28,7 +29,7 @@ const Register = () => {
     setError("");
 
     if (formData.password !== formData.confirmPassword) {
-      alert("Passwords do not match!");
+      setError("Passwords do not match!");
       setLoading(false);
       return;
     }
@@ -44,7 +45,7 @@ const Register = () => {
 
       if (response.ok) {
         alert('Registration Successful! You can now log in.');
-        navigate('/signin'); // Redirect to login page after successful registration
+        navigate('/signin');
       } else {
         setError(result.message || "Registration failed!");
       }
@@ -66,7 +67,7 @@ const Register = () => {
                 <div className="row g-0">
                   <div className="col-md-6 col-lg-5 d-none d-md-block">
                     <img
-                      src={require('./image.png')}
+                      src={image}
                       alt="register form"
                       className="img-fluid"
                       style={{ borderRadius: "1rem 0 0 1rem" }}
@@ -81,6 +82,8 @@ const Register = () => {
 
                         {error && <div className="alert alert-danger" role="alert">{error}</div>}
 
+                        {/* Input Fields */}
+                        {/* Child's Name */}
                         <div className="form-outline mb-4">
                           <div className="input-group">
                             <span className="input-group-text">
@@ -88,18 +91,17 @@ const Register = () => {
                             </span>
                             <input
                               type="text"
-                              id="childName"
                               name="childName"
                               className="form-control form-control-lg"
                               value={formData.childName}
                               onChange={handleInputChange}
                               placeholder="Child's Name"
                               required
-                              style={{ fontFamily: "Roboto, sans-serif" }}
                             />
                           </div>
                         </div>
 
+                        {/* Birth Date */}
                         <div className="form-outline mb-4">
                           <div className="input-group">
                             <span className="input-group-text">
@@ -107,17 +109,16 @@ const Register = () => {
                             </span>
                             <input
                               type="date"
-                              id="birthDate"
                               name="birthDate"
                               className="form-control form-control-lg"
                               value={formData.birthDate}
                               onChange={handleInputChange}
                               required
-                              style={{ fontFamily: "Roboto, sans-serif" }}
                             />
                           </div>
                         </div>
 
+                        {/* Parent's Mobile */}
                         <div className="form-outline mb-4">
                           <div className="input-group">
                             <span className="input-group-text">
@@ -125,18 +126,17 @@ const Register = () => {
                             </span>
                             <input
                               type="tel"
-                              id="parentMobile"
                               name="parentMobile"
                               className="form-control form-control-lg"
                               value={formData.parentMobile}
                               onChange={handleInputChange}
                               placeholder="Parent's Mobile Number"
                               required
-                              style={{ fontFamily: "Roboto, sans-serif" }}
                             />
                           </div>
                         </div>
 
+                        {/* Parent's Email */}
                         <div className="form-outline mb-4">
                           <div className="input-group">
                             <span className="input-group-text">
@@ -144,18 +144,17 @@ const Register = () => {
                             </span>
                             <input
                               type="email"
-                              id="parentEmail"
                               name="parentEmail"
                               className="form-control form-control-lg"
                               value={formData.parentEmail}
                               onChange={handleInputChange}
                               placeholder="Parent's Email Address"
                               required
-                              style={{ fontFamily: "Roboto, sans-serif" }}
                             />
                           </div>
                         </div>
 
+                        {/* Password */}
                         <div className="form-outline mb-4">
                           <div className="input-group">
                             <span className="input-group-text">
@@ -163,18 +162,17 @@ const Register = () => {
                             </span>
                             <input
                               type="password"
-                              id="password"
                               name="password"
                               className="form-control form-control-lg"
                               value={formData.password}
                               onChange={handleInputChange}
                               placeholder="Password"
                               required
-                              style={{ fontFamily: "Roboto, sans-serif" }}
                             />
                           </div>
                         </div>
 
+                        {/* Confirm Password */}
                         <div className="form-outline mb-4">
                           <div className="input-group">
                             <span className="input-group-text">
@@ -182,26 +180,25 @@ const Register = () => {
                             </span>
                             <input
                               type="password"
-                              id="confirmPassword"
                               name="confirmPassword"
                               className="form-control form-control-lg"
                               value={formData.confirmPassword}
                               onChange={handleInputChange}
                               placeholder="Confirm Password"
                               required
-                              style={{ fontFamily: "Roboto, sans-serif" }}
                             />
                           </div>
                         </div>
 
+                        {/* Submit Button */}
                         <div className="pt-1 mb-4">
-                          <button className="btn btn-dark btn-lg btn-block" type="submit" disabled={loading} style={{ fontFamily: "Montserrat, sans-serif", letterSpacing: "1px" }}>
+                          <button className="btn btn-dark btn-lg btn-block" type="submit" disabled={loading}>
                             {loading ? "Registering..." : "Register"}
                           </button>
                         </div>
 
                         <p className="mb-5 pb-lg-2" style={{ color: "#4caf50" }}>
-                          Already have an account? <link to="/signin" style={{ color: "#4caf50" }}>Login here</link>
+                          Already have an account? <Link to="/signin" style={{ color: "#4caf50" }}>Login here</Link>
                         </p>
                         <a href="#!" className="small text-muted">Terms of use.</a>
                         <a href="#!" className="small text-muted">Privacy policy</a>
