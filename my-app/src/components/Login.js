@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate , Link } from "react-router-dom";
 import { FaEnvelope, FaLock } from "react-icons/fa";
 import { ToastContainer, toast } from 'react-toastify'; 
 import 'react-toastify/dist/ReactToastify.css'; 
@@ -121,7 +121,7 @@ const Login = () => {
 
                         <a className="small text-muted" href="#!">Forgot password?</a>
                         <p className="mb-5 pb-lg-2" style={{ color: "#4caf50" }}>
-                          Don't have an account? <a href="/register" style={{ color: "#4caf50" }}>Register here</a>
+                          Don't have an account? <Link to="/register" style={{ color: "#4caf50" }}>Register here</Link>
                         </p>
 
                         <a href="#!" className="small text-muted">Terms of use.</a>

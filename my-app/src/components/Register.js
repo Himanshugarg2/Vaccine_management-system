@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate,Link } from "react-router-dom"; // Import useNavigate
 import { FaEnvelope, FaPhone, FaLock, FaUser } from "react-icons/fa"; // Import icons
 import { MdDateRange } from "react-icons/md";
 import './Register.css'; // Import the new CSS for styling
@@ -201,7 +201,7 @@ const Register = () => {
                         </div>
 
                         <p className="mb-5 pb-lg-2" style={{ color: "#4caf50" }}>
-                          Already have an account? <a href="/signin" style={{ color: "#4caf50" }}>Login here</a>
+                          Already have an account? <link to="/signin" style={{ color: "#4caf50" }}>Login here</link>
                         </p>
                         <a href="#!" className="small text-muted">Terms of use.</a>
                         <a href="#!" className="small text-muted">Privacy policy</a>
